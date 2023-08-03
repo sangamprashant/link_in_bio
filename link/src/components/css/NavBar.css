@@ -1,0 +1,19 @@
+.bg_body_nav {
+  background-color: black;
+  color: aliceblue;
+  border-bottom: 1px solid rgb(43, 43, 43);
+}
+.nav_bar {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+}
+.nav_main_title {
+  font-size: 30px;
+}
+.navbar-toggler {
+  background-color: #f77904;
+}
+.nav-link {
+  font-size: 20px;
+}

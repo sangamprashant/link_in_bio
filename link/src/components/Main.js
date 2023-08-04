@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-function Main({setMainComponent,setUsername}) {
+function Main({setMainComponent,setUsername,isSearch,setIsSearch}) {
   const ac = "https://avatars.githubusercontent.com/u/93257774?v=4";
   const av = "https://th.bing.com/th/id/OIP.avb9nDfw3kq7NOoP0grM4wHaEK?pid=ImgDet&rs=1";
   const { username } = useParams();
   useEffect(()=>{
     setMainComponent(true);
     setUsername(username);
+    setIsSearch(false)
   },[username])
 
   return (

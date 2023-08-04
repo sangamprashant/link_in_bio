@@ -6,10 +6,11 @@ import Offer from "./subHome/Offer";
 import AboutUs from "./subHome/AboutUs";
 import Register from "./subHome/Register";
 
-function Home({space,setMainComponent}) {
+function Home({space,setMainComponent,setIsSearch}) {
   useEffect(()=>{
     setMainComponent(false);
-  },[space])
+    setIsSearch(false);
+  })
   return (
     <div className="home">
       <Hero />

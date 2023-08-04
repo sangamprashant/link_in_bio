@@ -141,7 +141,7 @@ body {
   flex-direction: column;
 }
 
-.user_pic{
+.user_pic {
   display: flex;
   justify-content: center;
 }
@@ -165,7 +165,7 @@ body {
 .user_name {
   color: #f77904;
 }
-.user_bio{
+.user_bio {
   text-align: left;
 }
 
@@ -203,4 +203,30 @@ body {
   align-items: center;
   justify-content: center;
   flex-wrap: nowrap;
+}
+.search {
+  padding-top: 100px;
+  width: 100%;
+  color: antiquewhite;
+}
+.search_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.search_user_image {
+  width: 100px;
+  height: 100px;
+}
+
+.items {
+  align-items: center;
+}
+.items > h4 {
+  text-align: center;
+  font-size: xx-large;
+  color: #f77904;
 }

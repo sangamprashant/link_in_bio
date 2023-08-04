@@ -6,9 +6,9 @@ function Footer() {
     <div className="re">
       <div className="footre1">
         <div className="row footer_container">
-          <div className="col-md-3">
+          <Link className="col-md-3" to="/">
             <h1 className="banner_text_span">GetConnect</h1>
-          </div>
+          </Link>
           <div className="col-md-3">
             <div className=" d-flex">
               <div className="mx-3">

@@ -220,7 +220,12 @@ body {
 width: 100%;
 padding: 5px;
 }
-
+.action >i{
+  font-size: 40px;
+  margin: 5px;
+  color: red;
+  cursor: pointer;
+}
 
 .card > i {
   text-align: left;

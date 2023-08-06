@@ -21,6 +21,7 @@ function Main({setMainComponent,setUsername,isSearch,setIsSearch}) {
         } else {
           // User found, set the user state
           setUser(data);
+          console.log(data)
         }
       })
       .catch((error) => {
@@ -40,78 +41,14 @@ function Main({setMainComponent,setUsername,isSearch,setIsSearch}) {
           <div className='user_bio'><p>{user.bio}</p></div>
         </div>
         <div className='social_links'>
-          <div className='col-md-4 m-2'>
-            <Link className='card px-3' to="/">
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </Link>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
-          <div className='col-md-4 m-2'>
-            <div className='card px-3'>
-              <h2><i className='fab fa-instagram'></i></h2>
-              <div className='social_name'><h1>Instagram</h1></div>
-            </div>
-          </div>
+        {user.socialLinks.map((social,index) => (
+              <div key={index} className='col-md-4 m-2'>
+                <Link className='card px-3' to={social.link} target='_blank'>
+                  <h2><i className={social.icon}></i></h2>
+                  <div className='social_name'><h1>{social.platform}</h1></div>
+                </Link>
+              </div>
+            ))}
         </div>
       </div>)}
     </div>

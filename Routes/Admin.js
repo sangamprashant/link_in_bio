@@ -126,7 +126,27 @@ router.get("/api/user/:username", async (req, res) => {
       res.status(500).json({ error: "Server Error" });
     }
   });
+// API endpoint to handle user update
+router.put("/api/user/:id", (req, res) => {
+  const { id } = req.params;
+  const newData = req.body;
+  console.log(newData);
 
+  // Find the user by _id and update the data
+  LINKINBIOUSER.findOneAndUpdate({ _id: id }, newData, { new: true }, (err, updatedUser) => {
+    if (err) {
+      console.error("Error updating user:", err);
+      return res.status(500).json({ error: "Failed to update user" });
+    }
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Send the updated user data as the response
+    return res.json({ loggeduser: updatedUser, message: "Profile updated successfully." });
+  });
+});
 // // Endpoint to check email
 // router.post("/api/check/email", (req, res) => {
 //   const { email } = req.body;

@@ -43,10 +43,10 @@ body {
   border: 3px solid #f77904;
 }
 
-.service_logo > img {
-  width: 100px;
-  height: 100px;
+.service_logo > i {
+  font-size: 100px;
   padding: 5px;
+  color: #ffffff;
 }
 .service_text {
   color: aliceblue;
@@ -162,11 +162,26 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow on hover */
 }
 
-.user_name {
+.user_name input{
+  color: #f77904;
+  font-size: 30px;
+
+}
+.user_name{
   color: #f77904;
 }
-.user_bio {
+
+.loggeduser_detail_label{
   text-align: left;
+  width: 100%;
+}
+
+.user_bio textarea , .user_username input ,.user_email input, .user_name input{
+  text-align: center;
+  width: 100%;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 20px;
 }
 
 .social_links {
@@ -186,11 +201,26 @@ body {
   flex-wrap: nowrap;
   border: 2px solid white;
 }
+.col-md-4 >.input> .card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  color: #f77904;
+  flex-wrap: nowrap;
+  border: 2px solid white;
+}
 .social_links > .col-md-4 > .card:hover {
   color: #ffffff;
   border: 2px solid #ffffff;
   background-color: #f77904;
 }
+
+.social_link_input,.link_input{
+width: 100%;
+padding: 5px;
+}
+
 
 .card > i {
   text-align: left;
@@ -220,6 +250,7 @@ body {
 .search_user_image {
   width: 100px;
   height: 100px;
+  border-radius: 50%;
 }
 
 .items {
@@ -228,5 +259,12 @@ body {
 .items > h4 {
   text-align: center;
   font-size: xx-large;
+  color: #f77904;
+}
+/* logged user profile update  */
+.user_profile_add{
+  border-radius: 50%;
+  padding: 5px 10px;
+  background-color: #ffffff;
   color: #f77904;
 }

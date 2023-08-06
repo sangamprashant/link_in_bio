@@ -30,11 +30,14 @@ function Navbar({ mainComponent, setMainComponent, username, setIsSearch, isSear
           <div className="collapse navbar-collapse" id="navbarScroll">
 
             <ul>
-              <Link className="nav-item" to="signin" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
+              <Link className="nav-item" to="/signin" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
                 <a className="nav-link">Signin</a>
               </Link>
-              <Link className="nav-item" to="signup" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
+              <Link className="nav-item" to="/signup" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
                 <a className="nav-link">Signup</a>
+              </Link>
+              <Link className="nav-item" to="/loggeduser" onClick={() => { setIsSearch(true); setMainComponent(true); }}>
+                <a className="nav-link">Update</a>
               </Link>
             </ul>
           </div>

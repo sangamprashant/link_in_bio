@@ -1,25 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState} from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import ac from "./img/user.png"
+
 function Main({setMainComponent,setUsername,isSearch,setIsSearch}) {
-  const ac = "https://avatars.githubusercontent.com/u/93257774?v=4";
-  const av = "https://th.bing.com/th/id/OIP.avb9nDfw3kq7NOoP0grM4wHaEK?pid=ImgDet&rs=1";
+
+  const [user, setUser] = useState(null);
   const { username } = useParams();
   useEffect(()=>{
     setMainComponent(true);
     setUsername(username);
-    setIsSearch(false)
+    setIsSearch(false);
+    fetch(`http://localhost:5000/api/user/${username}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          // Handle user not found
+          console.log(data.error);
+          setUser(null);
+        } else {
+          // User found, set the user state
+          setUser(data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+      });
   },[username])
 
   return (
     <div className='main' >
+      {user && (
       <div>
         <div className='userDetails'>
-          <div className='user_pic col-md-4'><img src={ac} alt="User Profile" /></div>
-          <div className='user_name'><h1 >Prashant Srivastav</h1></div>
-          <div className='user_email'><h5>srivastavprashant.ps.official@gmail.com</h5></div>
-          <div className='user_username'><p>sangam_prashant</p></div>
-          <div className='user_bio'><p>Bio df ergb erverth rb3thdf rthg wth wrg w5yh rg wrt hwre fg weth wg wr</p></div>
+          <div className='user_pic col-md-4'><img src={user.avatar?user.avatar:ac} alt="User Profile" /></div>
+          <div className='user_name'><h1 >{user.name}</h1></div>
+          <div className='user_email'><h5>{user.email}</h5></div>
+          <div className='user_username'><p>{user.username}</p></div>
+          <div className='user_bio'><p>{user.bio}</p></div>
         </div>
         <div className='social_links'>
           <div className='col-md-4 m-2'>
@@ -95,7 +113,7 @@ function Main({setMainComponent,setUsername,isSearch,setIsSearch}) {
             </div>
           </div>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 }

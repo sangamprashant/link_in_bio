@@ -37,7 +37,7 @@ function Service() {
           <div className="col-md-3 p-3" key={service.id}>
             <div className="d-flex service">
               <div className="service_logo">
-                <img src={service.logo} alt={`Service ${service.id}`} />
+                <i className="fab fa-github"></i>
               </div>
               <div className="service_text">
                 <h1>{service.title}</h1>

@@ -11,7 +11,7 @@ function Main({setMainComponent,setUsername,isSearch,setIsSearch}) {
     setMainComponent(true);
     setUsername(username);
     setIsSearch(false);
-    fetch(`http://localhost:5000/api/user/${username}`)
+    fetch(`/api/user/${username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {

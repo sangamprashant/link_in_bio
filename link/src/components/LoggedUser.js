@@ -41,7 +41,7 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
       setMainComponent(true);
       setUsername(dataIn.username);
       setIsSearch(false);
-      fetch(`http://localhost:5000/api/user/${dataIn.username}`)
+      fetch(`/api/user/${dataIn.username}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.error) {
@@ -60,7 +60,7 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
 
   useEffect(() => {
     // Fetch all icons from the server when the component mounts
-    axios.get("http://localhost:5000/api/get/icons")
+    axios.get("/api/get/icons")
       .then((response) => {
         setIconsList(response.data);
         console.log(response.data)
@@ -123,7 +123,7 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
       notifyA("Name can't be empty.")
     }
     // Make an API call to update the user data
-    fetch(`http://localhost:5000/api/user/${dataIn._id}`, {
+    fetch(`/api/user/${dataIn._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -12,7 +12,7 @@ function IconAdd() {
   const handleUploadIcon = () => {
     // Make a POST request to the API endpoint with the icon data
     axios
-      .post("http://localhost:5000/api/add/icons", { icon })
+      .post("/api/add/icons", { icon })
       .then((response) => {
         // Check if the response contains the "message" field
         if (response.data.message) {

@@ -29,7 +29,7 @@ function Signin({ space,setLoggedUser }) {
     }
 
     // Sending data to server
-    fetch("http://localhost:5000/api/admin/backend/signin", {
+    fetch("/api/admin/backend/signin", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

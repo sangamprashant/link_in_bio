@@ -36,7 +36,7 @@ function Register({ space, setLoggedUser }) {
     }
 
     // Sending data to server
-    fetch("http://localhost:5000/api/admin/backend/signup", {
+    fetch("/api/admin/backend/signup", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

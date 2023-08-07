@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import Main from "./components/Main";
 import Search from "./components/Search";
 import LoggedUser from "./components/LoggedUser";
+import IconAdd from "./components/IconAdd";
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
       <LoginContext.Provider
         value={{setUserLogin}}
       >
-        <Navbar login={userLogin} setMainComponent={setMainComponent} mainComponent={mainComponent} username={username} isSearch={isSearch} setIsSearch={setIsSearch} />
+        <Navbar login={userLogin} setMainComponent={setMainComponent} mainComponent={mainComponent} username={username} isSearch={isSearch} setIsSearch={setIsSearch} loggedUser={loggedUser}/>
         <Routes>
           <Route exact path="/" element={<Home space={logContainer} setMainComponent={setMainComponent}  setIsSearch={setIsSearch} /> } />
           <Route exact path="/signin" element={<Signin space="true" setLoggedUser={setLoggedUser}/> } />
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/search" element={<Search space="true" isSearch={isSearch} setIsSearch={setIsSearch}/> } />
           <Route exact path="/:username" element={<Main setMainComponent={setMainComponent} setUsername={setUsername} isSearch={isSearch} setIsSearch={setIsSearch}/> } />
           <Route exact path="/loggeduser" element={<LoggedUser setMainComponent={setMainComponent} setUsername={setUsername} isSearch={isSearch} setIsSearch={setIsSearch} loggedUser={loggedUser}/> } />
+          <Route exact path="/iconadd" element={<IconAdd  setLoggedUser={setLoggedUser}/> } />
         </Routes>
         <Footer/>
         <ToastContainer theme="dark" />

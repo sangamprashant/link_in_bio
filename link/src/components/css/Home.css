@@ -273,3 +273,16 @@ padding: 5px;
   background-color: #ffffff;
   color: #f77904;
 }
+
+/* value update  */
+.valueshow{
+font-size: 40px;
+text-align: center;
+}
+.valueshow_label{
+  font-size: 40px;
+}
+.row>.upload_btn>button{
+  background-color: #f77904;
+  width: 100%;
+}

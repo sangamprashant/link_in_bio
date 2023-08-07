@@ -1,8 +1,48 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./css/NavBar.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { LoginContext } from "../context/LoginContext";
 
-function Navbar({ mainComponent, setMainComponent, username, setIsSearch, isSearch }) {
+function Navbar({ login, mainComponent, setMainComponent, username, setIsSearch, isSearch, loggedUser }) {
+  const navigate = useNavigate();
+  const { setUserLogin } = useContext(LoginContext);
+  const handleSignOut = () => {
+    setIsSearch(false); 
+    setMainComponent(true);
+    setUserLogin(false);
+    // Clear local storage
+    localStorage.clear();
+    // Navigate to the home page
+    navigate("/");
+  };
+
+  const optionShow = () => {
+    const token = localStorage.getItem("jwt");
+    if (login || token) {
+      return (
+        <>
+          <Link className="nav-item" to="/loggeduser" onClick={() => { setIsSearch(false); setMainComponent(true); }}>
+            <a className="nav-link">Update</a>
+          </Link>
+          <div className="nav-item" onClick={() => { handleSignOut() }}>
+            <a className="nav-link">SignOut</a>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Link className="nav-item" to="/signin" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
+            <a className="nav-link">Signin</a>
+          </Link>
+          <Link className="nav-item" to="/signup" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
+            <a className="nav-link">Signup</a>
+          </Link>
+        </>
+      );
+    }
+  };
+
   return (
     <div>
       <nav className="navbar bg_body_nav nav_bar">
@@ -19,31 +59,23 @@ function Navbar({ mainComponent, setMainComponent, username, setIsSearch, isSear
             </Link>
           )}
           {!isSearch && (
-            <Link className="d-flex col-md-4" role="search" to="/search" onClick={() => { setIsSearch(true);  setMainComponent(false);}}>
+            <Link className="d-flex col-md-4" role="search" to="/search" onClick={() => { setIsSearch(true); setMainComponent(false);}}>
               <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
             </Link>
           )}
-
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarScroll">
-
             <ul>
-              <Link className="nav-item" to="/signin" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
-                <a className="nav-link">Signin</a>
-              </Link>
-              <Link className="nav-item" to="/signup" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
-                <a className="nav-link">Signup</a>
-              </Link>
-              <Link className="nav-item" to="/loggeduser" onClick={() => { setIsSearch(true); setMainComponent(true); }}>
-                <a className="nav-link">Update</a>
-              </Link>
+            <Link className="nav-item" to="/iconadd" onClick={() => { setIsSearch(false); setMainComponent(false); }}>
+            <a className="nav-link">Add icon</a>
+          </Link>
+              {optionShow()}
             </ul>
           </div>
         </div>
       </nav>
-
     </div>
   );
 }

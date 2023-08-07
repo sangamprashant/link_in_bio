@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ac from "./img/user.png"
 
 function Search({ isSearch, setIsSearch }) {
   const [query, setQuery] = useState("");
@@ -9,7 +10,6 @@ function Search({ isSearch, setIsSearch }) {
   useEffect(() => {
     setIsSearch(true);
   }, []);
-  const ac = "https://avatars.githubusercontent.com/u/93257774?v=4";
 
   // Delayed API call using setTimeout
   const handleInputChange = (e) => {

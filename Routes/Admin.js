@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const LINKINBIOUSER = require("../Models/User");
+const LINKINBIOICON = require("../Models/Icon");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 
@@ -130,7 +131,6 @@ router.get("/api/user/:username", async (req, res) => {
 router.put("/api/user/:id", (req, res) => {
   const { id } = req.params;
   const newData = req.body;
-  console.log(newData);
 
   // Find the user by _id and update the data
   LINKINBIOUSER.findOneAndUpdate({ _id: id }, newData, { new: true }, (err, updatedUser) => {
@@ -147,6 +147,43 @@ router.put("/api/user/:id", (req, res) => {
     return res.json({ loggeduser: updatedUser, message: "Profile updated successfully." });
   });
 });
+
+router.post("/api/add/icons", (req, res) => {
+  const { icon } = req.body;
+
+  // Check if the icon already exists in the database
+  LINKINBIOICON.findOne({ icon: icon })
+    .then((existingIcon) => {
+      if (existingIcon) {
+        // If the icon already exists, return an error response
+        res.status(409).json({ error: "Icon already exists in the database" });
+      } else {
+        // If the icon is unique, create a new Icon document and save it to the database
+        LINKINBIOICON.create({ icon })
+          .then((newIcon) => {
+            res.status(201).json({icon:newIcon,message:"Icon created successfully"});
+          })
+          .catch((err) => {
+            res.status(500).json({ error: "Unable to post icon" });
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ error: "Error checking icon uniqueness" });
+    });
+});
+// API endpoint to get all icons
+router.get("/api/get/icons", (req, res) => {
+  // Find all icons in the database
+  LINKINBIOICON.find({})
+    .then((icons) => {
+      res.status(200).json(icons);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: "Unable to fetch icons" });
+    });
+});
+
 // // Endpoint to check email
 // router.post("/api/check/email", (req, res) => {
 //   const { email } = req.body;

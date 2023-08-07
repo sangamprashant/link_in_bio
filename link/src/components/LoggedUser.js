@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ac from "./img/user.png"
 import { toast } from "react-toastify";
+import { storage } from "./firebase";
+import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, loggedUser }) {
   const [dataIn, setDataIn] = useState(loggedUser);
@@ -10,6 +14,9 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
   const [platformLink,setPlatformLink] = useState("");
   const [platformIcon,setPlatformIcon] = useState("");
   const [isDataChanged, setIsDataChanged] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [iconsList, setIconsList] = useState([]);
+  const navigate=useNavigate();
   // Toast functions
   const notifyA = (msg) => toast.error(msg);
   const notifyB = (msg) => toast.success(msg);
@@ -21,8 +28,16 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
     setPlatformIcon("")
   }
 
+  useEffect(()=>{
+    const token = localStorage.getItem("jwt");
+    if(!token){
+      navigate("/")
+    }
+  })
+
   useEffect(() => {
-    if (dataIn) {
+    const token = JSON.stringify(localStorage.getItem("jwt"));
+    if (token&&dataIn) {
       setMainComponent(true);
       setUsername(dataIn.username);
       setIsSearch(false);
@@ -42,6 +57,18 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
         });
     }
   }, [dataIn, setMainComponent, setUsername, setIsSearch]);
+
+  useEffect(() => {
+    // Fetch all icons from the server when the component mounts
+    axios.get("http://localhost:5000/api/get/icons")
+      .then((response) => {
+        setIconsList(response.data);
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.error("Error fetching icons:", error.response.data.error);
+      });
+  }, []);
 
   const handleNameChange = (e) => {
     setDataIn((prevData) => ({
@@ -68,6 +95,14 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
   };
 
   const handleAddSocialLink = () => {
+    if(!platformName){
+      notifyA("Social Platform name is empty.")
+      return;
+    }
+    if(!platformLink){
+      notifyA("Social Platform link is empty.")
+      return;
+    }
     // Create a new social link object
     const newSocialLink = {
       platform: platformName,
@@ -115,6 +150,38 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
       });
   };
   
+  const handleFileChange = (event) => {
+    notifyB("File selected, wait for processing...")
+    const file = event.target.files[0];
+      // Check if the selected file is different from the one already stored in dataIn
+      if (file) {
+        setSelectedFile(file);
+        uploadFile(file);
+      }
+  };
+
+  const uploadFile = (file) => {
+    if(file ){
+      const fileRef = ref(storage, `LinkInBio/${file.name + uuidv4()}`);
+      uploadBytes(fileRef, file).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          // Send the download URL to your server for storage in MongoDB
+          handleProfileChange(url);
+        });
+      });
+    }
+    
+  };
+
+  const handleProfileChange = (e) => {
+    setDataIn((prevData) => ({
+      ...prevData,
+      avatar: e,
+    }));
+    notifyB("File is processed.")
+    setIsDataChanged(true);
+  };
+
   return (
     <div className='main' >
       {dataIn && (
@@ -123,6 +190,10 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
             <div className='user_pic col-md-4'><img src={dataIn.avatar ? dataIn.avatar : ac} alt="User Profile" /> </div>
             <div className='user_username '><p>{dataIn.username} </p></div>
             <div className='user_email'><p>{dataIn.email} </p></div>
+            <label className=' col-md-4 px-3'>Profile Pic</label>
+            <div className='user_name  col-md-4'>
+              <input type='file'   name='select a file'  onChange={handleFileChange} />
+            </div>
             <label className=' col-md-4 px-3'>Name</label>
             <div className='user_name  col-md-4'>
               <input value={dataIn.name} onChange={handleNameChange} placeholder='name' required={true} />
@@ -146,7 +217,12 @@ function LoggedUser({ setMainComponent, setUsername, isSearch, setIsSearch, logg
           <div className='input'><div className='card px-3'>
             <div className='social_link_input'> <input className='link_input' placeholder='Platform name' value={platformName} onChange={(e)=>{setPlatformName(e.target.value)}}/> </div>
             <div className='social_link_input'><input className='link_input' placeholder='Platform link' value={platformLink} onChange={(e)=>{setPlatformLink(e.target.value)}}/></div>
-            <div className='social_link_input'><input className='link_input' placeholder='Platform icon i.e:fab fa-github' value={platformIcon} onChange={(e)=>{setPlatformIcon(e.target.value)}}/></div>
+            <div className='social_link_input'><select className='link_input' value={platformIcon} onChange={(e) => setPlatformIcon(e.target.value)} >
+                <option value="">Select an icon</option>
+                {iconsList.map((icon) => (
+                  <option key={icon._id} value={icon.icon} ><i className={icon.icon}></i>{icon.icon}</option>
+                ))}
+            </select></div>
             </div>  
           </div>
         </div>}

@@ -101,7 +101,7 @@ body {
   width: 100%;
 }
 .open {
-  padding-top: 10%;
+  padding-top: 15%;
 }
 .footer_container {
   display: flex;
@@ -128,7 +128,7 @@ body {
 /* user -main */
 .main {
   color: #ffffff;
-  padding-top: 70px;
+  padding-top: 140px;
   padding-bottom: 70px;
   background: linear-gradient(to bottom, #0b0b0b, #252525);
 }

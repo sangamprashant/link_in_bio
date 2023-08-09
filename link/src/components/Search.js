@@ -22,7 +22,7 @@ function Search({ isSearch, setIsSearch }) {
     if (value) {
       // Set a new timer to trigger the API call after 2 seconds of user input
       timeoutId = setTimeout(() => {
-        fetch(`http://localhost:5000/api/search/users?query=${value}`)
+        fetch(`/api/search/users?query=${value}`)
           .then((res) => res.json())
           .then((data) => {
             setUsers(data);
